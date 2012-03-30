@@ -105,7 +105,7 @@ class Thread{
 			$this->date = $row->date;
 		}
 
-		//wieviel Post im Thread  ERSTER Post zählt nicht mit!
+		//wieviel Post im Thread  ERSTER Post zï¿½hlt nicht mit!
 		$sql = "SELECT count(*) as posts FROM `post` WHERE thread = ".$id;
 		$query = mysql_query($sql);
 		if($query){
@@ -175,7 +175,7 @@ class Thread{
 		echo '<tr><th></th><td>';
 
 		echo "<font size=\"5\"><b> $this->title </b></font><br/>";
-		echo "<i> $this->date by </i><b>".User::getNameById($this->id)."</b> <br/>";
+		echo "<i> $this->date by </i><b>".User::getNameById($this->user)."</b> <br/>";
 		echo "$this->post_count Answers";
 		echo '</tr>';
 
