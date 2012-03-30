@@ -146,13 +146,13 @@ class Thread{
 	public static function getAllThreads(){
 		$threads = array();
 
-		$sql = "SELECT id FROM `thread` ORDER BY id";
+		$sql = $sql = "SELECT thread FROM `post` GROUP BY thread ORDER BY max( id ) DESC";
 		$query = mysql_query($sql);
 
 		$i = 0;
 		$row = mysql_fetch_object($query);
 		while($row){
-			$threads[$i] = new Thread($row->id);
+			$threads[$i] = new Thread($row->thread);
 			$row = mysql_fetch_object($query);
 			$i++;
 		}
