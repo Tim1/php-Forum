@@ -317,7 +317,7 @@ class Frontpage{
 
 class Submit{
 	public static function printFormThread(){
-		echo '<form action="submit.php?type=thread" method="get">
+		echo '<form action="submit.php" method="post">
 		<input type="text" name="title"/><br/>
 		<textarea rows="8" cols="115" name="text"></textarea>
 		<input type="hidden" name="type" value="thread">
@@ -325,7 +325,7 @@ class Submit{
 		</form>';
 	}
 	public static function printFormPost($threadid){
-		echo '<form action="submit.php?type=post" method="get">
+		echo '<form action="submit.php" method="post">
 		<textarea rows="8" cols="90" name="text"></textarea>
 		<input type="hidden" name="type" value="post">
 		<input type="hidden" name="threadid" value="'.$threadid.'">
