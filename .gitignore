@@ -1,4 +1,2 @@
 .*
-tesetdir/
-lib/
-*config.php
+lib/config.php
