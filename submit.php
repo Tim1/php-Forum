@@ -10,25 +10,26 @@ $threadid = -1;
 
 if(User::isValid($name, $passwd)){
 	$id = User::getIdByName(mysql_real_escape_string($name));
-	if($_GET['type'] == "thread"){
-		$threadid = Thread::makeThread(mysql_real_escape_string($_GET['title']), $id);
+	if($_POST['type'] == "thread"){
+		$threadid = Thread::makeThread(mysql_real_escape_string($_POST['title']), $id);
 
-		Post::makePost(mysql_real_escape_string($_GET['text']), $id, $threadid);
+		Post::makePost(mysql_real_escape_string($_POST['text']), $id, $threadid);
 
-	}elseif ($_GET['type'] == "post" && is_numeric($_GET['threadid'])){
-		$threadid = mysql_real_escape_string($_GET['threadid']);
-		
+	}elseif ($_POST['type'] == "post" && is_numeric($_POST['threadid'])){
+		$threadid = mysql_real_escape_string($_POST['threadid']);
+
+
 		if(Thread::isValid($threadid))
-			Post::makePost(mysql_real_escape_string($_GET['text']), $id, $threadid);
+			Post::makePost(mysql_real_escape_string($_POST['text']), $id, $threadid);
 		else
 			die("No such Thread");
-		
+
 	}
 
 }
 else{
-// 	echo "User: ".$name."<br/>";
-// 	echo "Pass: ".$passwd."<br/>";
+	// 	echo "User: ".$name."<br/>";
+	// 	echo "Pass: ".$passwd."<br/>";
 	die("wrong Username or Password");
 }
 

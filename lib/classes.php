@@ -1,4 +1,4 @@
-<?php
+ï»¿<?php
 include "config.php";
 
 class User {
@@ -105,7 +105,7 @@ class Thread{
 			$this->date = $row->date;
 		}
 
-		//wieviel Post im Thread  ERSTER Post zählt nicht mit!
+		//wieviel Post im Thread  ERSTER Post zï¿½hlt nicht mit!
 		$sql = "SELECT count(*) as posts FROM `post` WHERE thread = ".$id;
 		$query = mysql_query($sql);
 		if($query){
@@ -146,7 +146,7 @@ class Thread{
 	public static function getAllThreads(){
 		$threads = array();
 
-		$sql = $sql = "SELECT thread FROM `post` GROUP BY thread ORDER BY max( id ) DESC";
+		$sql = "SELECT thread FROM `post` GROUP BY thread ORDER BY max( id ) DESC";
 		$query = mysql_query($sql);
 
 		$i = 0;
@@ -175,7 +175,7 @@ class Thread{
 		echo '<tr><th></th><td>';
 
 		echo "<font size=\"5\"><b> $this->title </b></font><br/>";
-		echo "<i> $this->date by </i><b>".User::getNameById($this->id)."</b> <br/>";
+		echo "<i> $this->date by </i><b>".User::getNameById($this->user)."</b> <br/>";
 		echo "$this->post_count Answers";
 		echo '</tr>';
 
@@ -317,7 +317,7 @@ class Frontpage{
 
 class Submit{
 	public static function printFormThread(){
-		echo '<form action="submit.php?type=thread method="get">
+		echo '<form action="submit.php" method="post">
 		<input type="text" name="title"/><br/>
 		<textarea rows="8" cols="115" name="text"></textarea>
 		<input type="hidden" name="type" value="thread">
@@ -325,7 +325,7 @@ class Submit{
 		</form>';
 	}
 	public static function printFormPost($threadid){
-		echo '<form action="submit.php?type=post method="get">
+		echo '<form action="submit.php" method="post">
 		<textarea rows="8" cols="90" name="text"></textarea>
 		<input type="hidden" name="type" value="post">
 		<input type="hidden" name="threadid" value="'.$threadid.'">
