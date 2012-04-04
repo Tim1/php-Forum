@@ -2,8 +2,8 @@
 <head>
 <title>Frontpage</title>
 </head>
-<?php 
-require_once 'lib/classes.php';
+<?php
+	require_once 'lib/classes.php';
 ?>
 <body>
 	<div style="max-width: 850px;">
@@ -14,7 +14,7 @@ require_once 'lib/classes.php';
 			<a href="login.php">Login </a>&nbsp;
 		</div>
 
-		<?php 
+		<?php
 		Frontpage::show();
 		?>
 	</div>
