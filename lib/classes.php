@@ -31,18 +31,18 @@ class User {
 		}
 		return "no User";
 	}
-	
+
 	public static function printLogin(){
 		$user = $_COOKIE['User'];
 		$passwd = $_COOKIE['passwd'];
-		
+
 		if(User::isValid($user, $passwd))
 			echo "User: <b>". $user."</b>";
 		else
 			echo '<font color="red">No Login!</font> ';
 	}
-	
-	
+
+
 	public static function isValid($name,$passwd){
 		$id = -1;
 		$sql = "SELECT id FROM `user` WHERE name = '".$name."' AND passwd = '".$passwd."'";
@@ -51,7 +51,7 @@ class User {
 			$row = mysql_fetch_object($query);
 			return $row->id > 0 ? true : false;
 		}
-		
+
 		return false;
 	}
 
@@ -64,7 +64,7 @@ class User {
 		}
 		return " ";
 	}
-	
+
 	public static function getIdByName($name){
 		$sql = "SELECT id FROM `user` WHERE name = '".$name."'";
 		$query = mysql_query($sql);
@@ -73,7 +73,7 @@ class User {
 			return $row->id;
 		}
 		return -1;
-	}	
+	}
 
 	public static function getPostsById($id){
 		$sql = "SELECT count(*) as po FROM `post` WHERE user = ".$id;
@@ -161,12 +161,24 @@ class Thread{
 	}
 
 	function printPreviewHTML(){
+		$post = $this->getLastestPost();
 		echo "<tr><td>";
 		echo "<b><a href=\"thread.php?id=$this->id\"> $this->title </a></b><br/>";
-		echo "<i> $this->date by </i>".User::getNameById($this->user)." <br/>";
-		echo "$this->post_count Answers";
+		echo "<i>Last Post: ". $post->getDate() ."</i> by <b> ". $post->getUser()  ."</b><br/>";
+		echo "<b>$this->post_count</b> Answers";
 
 		echo "</td></tr>";
+	}
+
+	function getLastestPost(){
+		$sql = "SELECT max(id) as maxid FROM `post` WHERE thread = ".$this->id;
+		$query = mysql_query($sql);
+
+		if($query){
+			$row = mysql_fetch_object($query);
+			return new Post($row->maxid);
+		}
+		return new Post(-1);
 	}
 
 	function printHTML(){
@@ -189,14 +201,14 @@ class Thread{
 		echo '<tr><td></td><td><br/><br/><br/> <b> New Post </b>';
 		Submit::printFormPost($this->id);
 		echo '</td></tr>';
-		
+
 		echo '</table> ';
 	}
 
 	public static function makeThread($title, $userid){
 		$sql = "INSERT INTO `thread` (`id`, `title`, `user`, `date`) VALUES (NULL, '". htmlentities($title) ."', '". $userid ."', CURRENT_TIMESTAMP);";
 		$query = mysql_query($sql);
-		
+
 		$sql = "SELECT max( id ) as maxID
 		FROM `thread`";
 		$query = mysql_query($sql);
@@ -204,10 +216,10 @@ class Thread{
 			$row = mysql_fetch_object($query);
 			return $row->maxID;
 		}
-		
+
 		return -1;
 	}
-	
+
 	public static function isValid($id){
 		$sql = "SELECT id FROM `thread` WHERE id = ".$id;
 		$query = mysql_query($sql);
@@ -269,11 +281,11 @@ class Post{
 	}
 
 	function getUser(){
-		User::getNameById($this->user);
+		return User::getNameById($this->user);
 	}
 
 	function getDate(){
-		$this->date;
+		return $this->date;
 	}
 
 	public function getThreadPosts($id){
@@ -295,7 +307,7 @@ class Post{
 
 	public static function makePost($text, $userid, $threadid){
 		$sql = "INSERT INTO `post` (`id`, `text`, `thread`, `user`, `date`) VALUES (NULL, '".htmlentities($text)."', '".$threadid."', '".$userid."', CURRENT_TIMESTAMP);";
-		
+
 		$query = mysql_query($sql);
 	}
 }
