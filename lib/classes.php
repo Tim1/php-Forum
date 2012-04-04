@@ -1,5 +1,5 @@
-﻿<?php
-include "config.php";
+﻿<?php 
+include_once "config.php";
 
 class User {
 	private $id;
@@ -347,6 +347,5 @@ class Submit{
 
 
 }
-
 
 ?>

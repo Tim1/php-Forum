@@ -5,7 +5,6 @@
 <?php 
 require_once 'lib/classes.php';
 ?>
-
 <body>
 	<div style="max-width: 850px;">
 		<div style="display: block; text-align: left; float: left;">
